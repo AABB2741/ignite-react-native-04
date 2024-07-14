@@ -6,3 +6,7 @@ export function tagUserInfoCreate() {
         user_email: "mario@worxbase.com",
     });
 }
+
+export async function tagCartUpdate(itemsCount: string) {
+    OneSignal.User.addTag("cart_items_count", itemsCount);
+}

@@ -15,10 +15,22 @@ type Props = {
     onClose: () => void;
 };
 
+interface CustomOSNotification {
+    custom: {
+        toString: () => string;
+    };
+    u: string;
+}
+
 export function Notification({ data, onClose }: Props) {
     function handleOnPress() {
-        if (data.launchURL) {
-            Linking.openURL(data.launchURL);
+        const { custom }: CustomOSNotification = JSON.parse(
+            data.rawPayload.toString()
+        );
+        const { u: uri }: CustomOSNotification = JSON.parse(custom.toString());
+
+        if (uri) {
+            Linking.openURL(uri);
             onClose();
         }
     }
